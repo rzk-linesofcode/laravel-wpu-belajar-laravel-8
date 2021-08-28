@@ -2,33 +2,20 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class Post
+class Post extends Model
 {
-    private static $blog_posts = [
-        [
-            "title" => "Judul Post Pertama",
-            "slug" => "judul-post-pertama",
-            "author" => "Rezky Roesjda",
-            "body" => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod in iste aperiam assumenda doloribus ea quasi natus optio deserunt eligendi tempora ipsa inventore ut cupiditate, ipsam consequuntur debitis! Esse, voluptatem?"
-        ],
-        [
-            "title" => "Judul Post Kedua",
-            "slug" => "judul-post-kedua",
-            "author" => "Rezky Roesjda",
-            "body" => "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repudiandae voluptate quisquam dolorum iusto nostrum consequuntur delectus eum totam? Dolores a ratione quasi perferendis aut iure quae sit, nisi molestiae sint?"
-        ]
-    ];
+    use HasFactory;
 
-    public static function all()
-    {
-        return collect(self::$blog_posts);
-    }
+    // protected $fillable = [
+    //     'title',
+    //     'excerpt',
+    //     'body'
+    // ];
 
-    public static function find($slug)
-    {
-        $posts = static::all();
-        return $posts->firstWhere('slug', $slug);
-    }
+    // kebalikan dari fillable, jadi selain id boleh diinput secara bulk 
+    // menggunakan Post::create 
+    protected $guarded = ['id'];
 }

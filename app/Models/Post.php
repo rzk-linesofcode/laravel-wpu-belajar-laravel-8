@@ -18,4 +18,9 @@ class Post extends Model
     // kebalikan dari fillable, jadi selain id boleh diinput secara bulk 
     // menggunakan Post::create 
     protected $guarded = ['id'];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

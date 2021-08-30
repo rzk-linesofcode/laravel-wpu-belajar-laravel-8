@@ -8,22 +8,13 @@ use Illuminate\Http\Request;
 class CategoryController extends Controller
 {
 
-    public function index(Category $category)
-    {
-        return view('categories', [
-            'title' => 'Categories',
-            'categories' => $category->all()
-        ]);
-    }
-
     public function show(Category $category)
     {
         return view(
-            'category',
+            'posts',
             [
-                'title' => $category->name,
-                'posts' => $category->posts,
-                'category' => $category->name
+                'title' => "Post By Category: $category->name",
+                'posts' => $category->posts->load('author', 'category'),
             ]
         );
     }

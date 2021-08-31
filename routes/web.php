@@ -26,6 +26,7 @@ Route::get(
     '/',
     function () {
         return view('home', [
+            'active' => 'home',
             "title" => "Home"
         ]);
     }
@@ -35,6 +36,7 @@ Route::get(
     '/about',
     function () {
         return view('about', [
+            'active' => 'about',
             "title" => "About",
             "name" => "Rezky",
             "email" => "rzk84.rezky@gmail.com",
@@ -45,5 +47,6 @@ Route::get(
 
 Route::get('/posts', [PostController::class, 'index']);
 Route::get('/post/{post:slug}', [PostController::class, 'show']);
+Route::get('/categories', [CategoryController::class, 'index']);
 Route::get('/categories/{category:slug}', [CategoryController::class, 'show']);
 Route::get('/authors/{author:username}', [UserController::class, 'show']);

@@ -9,14 +9,6 @@ class Post extends Model
 {
     use HasFactory;
 
-    // protected $fillable = [
-    //     'title',
-    //     'excerpt',
-    //     'body'
-    // ];
-
-    // kebalikan dari fillable, jadi selain id boleh diinput secara bulk 
-    // menggunakan Post::create 
     protected $guarded = ['id'];
 
     protected $with = ['category', 'author'];
@@ -29,5 +21,29 @@ class Post extends Model
     public function author()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function scopeFilter($query, array $filter)
+    {
+
+        $query->when($filter['search'] ??  false, function ($query, $search) {
+            return $query->where(function ($query) use ($search) {
+                $query->where('title', 'like', '%' . $search . '%')
+                    ->orWhere('body', 'like', '%' . $search . '%');
+            });
+        });
+
+        $query->when($filter['category'] ??  false, function ($query, $category) {
+            return $query->whereHas('category', function ($query) use ($category) {
+                $query->where('slug', $category);
+            });
+        });
+
+        $query->when(
+            $filter['author'] ??  false,
+            fn ($query, $author) =>
+            $query->whereHas('author', fn ($query) =>
+            $query->where('username', $author))
+        );
     }
 }

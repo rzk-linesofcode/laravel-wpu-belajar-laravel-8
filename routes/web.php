@@ -25,9 +25,10 @@ use Illuminate\Support\Facades\Route;
 Route::get(
     '/',
     function () {
+        $strHome = 'home';
         return view('home', [
-            'active' => 'home',
-            "title" => "Home"
+            'active' => "$strHome",
+            'title' => 'Home',
         ]);
     }
 );
@@ -37,10 +38,10 @@ Route::get(
     function () {
         return view('about', [
             'active' => 'about',
-            "title" => "About",
-            "name" => "Rezky",
-            "email" => "rzk84.rezky@gmail.com",
-            "image" => "me.jpg"
+            'title' => 'About',
+            'name' => 'Rezky',
+            'email' => 'rzk84.rezky@gmail.com',
+            'image' => 'me.jpg',
         ]);
     }
 );
@@ -48,5 +49,3 @@ Route::get(
 Route::get('/posts', [PostController::class, 'index']);
 Route::get('/post/{post:slug}', [PostController::class, 'show']);
 Route::get('/categories', [CategoryController::class, 'index']);
-Route::get('/categories/{category:slug}', [CategoryController::class, 'show']);
-Route::get('/authors/{author:username}', [UserController::class, 'show']);

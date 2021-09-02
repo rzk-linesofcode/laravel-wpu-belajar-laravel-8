@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RegisterController;
@@ -46,13 +47,12 @@ Route::get(
 );
 
 Route::get('/posts', [PostController::class, 'index']);
-
 Route::get('/post/{post:slug}', [PostController::class, 'show']);
-
 Route::get('/categories', [CategoryController::class, 'index']);
+Route::get('/login', [LoginController::class, 'index'])->middleware('guest');
+Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
 
-Route::get('/login', [LoginController::class, 'index']);
-
-Route::get('/register', [RegisterController::class, 'index']);
-
+Route::post('/login', [LoginController::class, 'authenticate'])->name('login');
+Route::post('/logout', [LoginController::class, 'logout']);
 Route::post('/register', [RegisterController::class, 'store']);
